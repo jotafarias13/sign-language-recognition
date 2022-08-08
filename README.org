@@ -1,0 +1,2 @@
+#+TITLE: Sign Language Recognition
+#+AUTHOR: João Lucas Correia Barbosa de Farias
