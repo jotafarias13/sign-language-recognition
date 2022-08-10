@@ -7,14 +7,6 @@ import wandb
 import matplotlib.pyplot as plt
 
 
-# ## Using numpy to open dataset
-# print("Creating numpy arrays...")
-# X = np.load("raw_data.npy")
-# Y = np.load("raw_data_labels.npy")
-# print(f"X.shape: {X.shape}")
-# print(f"Y.shape: {Y.shape}")
-# print("Finished!")
-
 ## Downloading artifacts from wandb
 print("Downloading artifacts from wandb...")
 os.system("wandb login --relogin")
