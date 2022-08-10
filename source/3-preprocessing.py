@@ -88,13 +88,13 @@ print(f"Size of preprocessed_data_labels.npy: {os.path.getsize('preprocessed_dat
 
 # Exporting data to wandb
 artifact_train = wandb.Artifact(name="preprocessed_data.npy",
-        type="preprocessed_data",
+        type="clean_data",
         description="Preprocessed data (npy file) from Sign Language Recognition Dataset (without labels)")
 artifact_train.add_file("preprocessed_data.npy")
 
 
 artifact_train_labels = wandb.Artifact(name="preprocessed_data_labels.npy",
-        type="preprocessed_data",
+        type="clean_data",
         description= "Preprocessed data (npy file) from Sign Language Recognition Dataset (only labels)")
 artifact_train_labels.add_file("preprocessed_data_labels.npy")
 
