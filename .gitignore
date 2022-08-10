@@ -133,3 +133,6 @@ source/wandb/*
 
 # data
 data/*
+
+# MacOS
+.DS_Store
