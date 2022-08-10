@@ -113,7 +113,7 @@ run.finish()
 
 ## Deleting local files
 print("Deleting local files...")
-os.system("rm ../data/X.npy ../data/Y.npy")
+os.system("rm -r ../data")
 os.system("rm raw_data.npy raw_data_labels.npy")
 print("Done!")
 
