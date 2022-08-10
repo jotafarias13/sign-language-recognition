@@ -3,9 +3,8 @@
 
 ## import modules
 import numpy as np
-import h5py
 import wandb
-import matplotlib.pyplot as plt
+from PIL import Image
 
 # modules necessary to download zip file
 # and unzip it
@@ -69,7 +68,21 @@ print(f"Y.shape: {Y.shape}")
 print(f"new_X.shape: {new_X.shape}")
 print(f"new_Y.shape: {new_Y.shape}")
 
-np.save("raw_data.npy", new_X)
+# Reshape images for size purposes
+print("Reshaping images to 80x80...")
+reshaped_X = []
+for img in new_X:
+    img = (img*255).astype(np.uint8)
+    image = Image.fromarray(img)
+    image = image.resize((80,80))
+    img = np.array(image)
+    reshaped_X.append(img)
+reshaped_X = np.array(reshaped_X)
+print("Done!")
+
+print(f"reshaped_X.shape: {reshaped_X.shape}")
+
+np.save("raw_data.npy", reshaped_X)
 np.save("raw_data_labels.npy", new_Y)
 print(f"Size of raw_data.npy: {os.path.getsize('raw_data.npy')}")
 print(f"Size of raw_data_labels.npy: {os.path.getsize('raw_data_labels.npy')}")
@@ -77,9 +90,7 @@ print(f"Size of raw_data_labels.npy: {os.path.getsize('raw_data_labels.npy')}")
 
 
 
-
-
-
+# Exporting data to wandb
 os.system("wandb login --relogin")
 # initiate a run, syncing all steps taken on the notebook with wandb
 run = wandb.init(project="sign_language_recognition", save_code=True)
@@ -99,25 +110,16 @@ run.log_artifact(artifact_train)
 run.log_artifact(artifact_train_labels)
 run.finish()
 
-print("a")
+
+## Deleting local files
+print("Deleting local files...")
+os.system("rm ../data/X.npy ../data/Y.npy")
+os.system("rm raw_data.npy raw_data_labels.npy")
+print("Done!")
 
 
 
 
-
-
-
-
-plt.imshow(X[1000])
-plt.show()
-
-
-Y_NULL = np.where(Y == 'NULL')[0]
-print(Y_NULL)
-
-for i in range(10):
-    plt.imshow(X[Y_NULL[i]])
-    plt.show()
 
 
 
