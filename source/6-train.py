@@ -143,7 +143,7 @@ artifact_encoder = wandb.Artifact("target_enconder",
 artifact_encoder.add_file("target_encoder")
 run.log_artifact(artifact_encoder)
 
-artifact_model = wandb.Artifact("best_model",
+artifact_model = wandb.Artifact("best_model.h5",
                                 type="inference_artifact",
                                 description="Model used to fit the data")
 artifact_model.add_file("best_model.h5")
