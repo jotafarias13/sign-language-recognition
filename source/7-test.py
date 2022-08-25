@@ -11,12 +11,17 @@ import matplotlib.pyplot as plt
 # scikit-learn
 from sklearn.metrics import fbeta_score, precision_score, recall_score, accuracy_score
 from sklearn.metrics import classification_report, confusion_matrix, ConfusionMatrixDisplay
+from sklearn.base import BaseEstimator, TransformerMixin
+from sklearn.pipeline import Pipeline, FeatureUnion
 
 # imbalanced-learn
 from imblearn.metrics import geometric_mean_score
 
 # tensorflow
 from tensorflow import keras
+
+# pipeline
+from pipeline_classes import FeatureSelector, NumericalTransformer
 
 
 ## configure logging
@@ -82,14 +87,26 @@ logger.info("Done!")
 
 ## Downloading model
 logger.info("Downloading model...")
-best_model = run.use_artifact("sign_language_recognition/best_model.h5:latest")
+best_model = run.use_artifact("sign_language_recognition/model.h5:latest")
 best_model = best_model.file()
 model = keras.models.load_model(best_model)
 logger.info("Done!")
 
 
-## Processing images (temporary)
-x_test = x_test/255
+## Downloading pipeline
+logger.info("Downloading pipeline...")
+pipeline = run.use_artifact("sign_language_recognition/pipeline:latest")
+pipeline = pipeline.file()
+pipeline = joblib.load(pipeline)
+logger.info("Done!")
+
+
+## Passing images through pipeline
+logger.info("Passing data through pipeline...")
+x_test = pipeline.transform(x_test)
+logger.info("Done!")
+
+print(x_test.shape)
 print(x_test[0])
 
 
